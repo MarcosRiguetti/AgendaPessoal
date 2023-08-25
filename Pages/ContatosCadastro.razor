@@ -1,0 +1,315 @@
+﻿@page "/cadastroCliente"
+@page "/editarContato/{ContatoID:int}"
+
+@using AgendaPessoal.Repository
+@using AgendaPessoal.Model
+@using AgendaPessoal;
+
+@inject IConsulta_Local iConsultaLocal
+@inject NavigationManager Navigation
+
+<button type="button" @onclick="Retornar" class="btn btn-outline-warning">Voltar</button>
+
+<br />
+<br />
+
+<h3 style="text-align: center; font-weight: bold">Cadastro de Contatos</h3>
+
+<br />
+
+<EditForm Model="@contatoModel" OnValidSubmit="Validar">
+    <DataAnnotationsValidator />
+
+    <div class="mb-2">
+        <img src="@_userAvatar" @onclick="ExibirAcao" height="50" width="50" class="rounded-circle" />
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label id="fomrLabel">Digite o Nome do Contato:</label>
+        <input type="text" @bind-value="contatoModel.Nome" class="form-control" placeholder="👤" />
+        <ValidationMessage For="@(()=> contatoModel.Nome)" />
+    </div>
+
+    <br />
+
+    <div class="mt-2 form-group">
+        <label id="fomrLabel">Insira o Aniversário:</label>
+        <input type="text" @bind-value="contatoModel.Aniversario" class="form-control" placeholder="🗓️">
+        <ValidationMessage For="@(()=> contatoModel.Aniversario)" />
+    </div>
+
+    <br />
+
+    <div class="mt-2 form-group">
+        <label id="fomrLabel">Digite o Celular:</label>
+        <input type="text" @bind-value="contatoModel.Telefone" class="form-control" placeholder="📱">
+        <ValidationMessage For="@(()=> contatoModel.Telefone)" />
+    </div>
+
+    <br />
+
+    <div class="mt-2 form-group">
+        <label id="fomrLabel">Digite o Telefone(Opcional):</label>
+        <input type="text" @bind-value="contatoModel.Telefone2" class="form-control" placeholder="☎️">
+        <ValidationMessage For="@(()=> contatoModel.Telefone2)" />
+    </div>
+
+    <br />
+
+    <div class="text-center mt-2">
+        <button class="btn btn-dark btn-lg" type="submit">
+            <span class="@_spinnerClass" role="status" aria-hidden="true"></span>
+            Salvar
+        </button>
+    </div>
+     
+    <br />
+    <br />
+</EditForm>
+
+@code {
+    ContatosModel contatoModel = new();
+
+    private string _userAvatar = "images/user.png";
+    private string _spinnerClass = "";
+    private string _imageBase64Data;
+    private string nomeContato;
+
+    private List<ContatosModel> contatosSalvos;
+
+    private ContatosModel UsuarioImage;
+    private ContatosModel Usuario;
+
+    [Parameter]
+    public int ContatoID { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        try
+        {
+            contatosSalvos = await iConsultaLocal.GetAllContatos();
+
+            if (ContatoID > 0)
+            {
+                var response = await iConsultaLocal.GetContatosByID(ContatoID);
+
+                if (response != null)
+                {
+                    if (response.UserAvatar != null)
+                    {
+                        var trazerImagem = GetImageBase64(response);
+                        _userAvatar = trazerImagem;
+                    }
+                    else
+                    {
+                        _userAvatar = "images/user.png";
+                    }
+
+                    contatoModel.Nome = response.Nome;
+                    contatoModel.Telefone = response.Telefone;
+                    contatoModel.Telefone2 = response.Telefone2;
+                    contatoModel.Aniversario = response.Aniversario;
+
+                    nomeContato = response.Nome;
+                }
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    private async void Validar()
+    {
+        try
+        {
+            _spinnerClass = "spinner-border spinner-border-sm";
+
+            var verificarExiste = contatosSalvos.FirstOrDefault(x => x.Nome == nomeContato);
+
+            if (verificarExiste == null)
+            {
+                if (!string.IsNullOrWhiteSpace(_imageBase64Data))
+                {
+                    // Converter a imagem em bytes
+                    var imageBytes = Convert.FromBase64String(_imageBase64Data);
+
+                    // Criar o objeto ImageModel
+                    var imageModel = new ContatosModel
+                        {
+                            UserAvatar = imageBytes,
+                            Nome = contatoModel.Nome,
+                            Telefone = contatoModel.Telefone,
+                            Telefone2 = contatoModel.Telefone2,
+                            NameImage = _userAvatar,
+                            Aniversario = contatoModel.Aniversario
+                        };
+
+                    int responseUsuario = await iConsultaLocal.AddUContatos(imageModel);
+
+                    if (responseUsuario > 0)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Sucesso", "Contato registrado com sucesso!", "OK");
+                        Navigation.NavigateTo("/inicioCliente");
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert("Erro", "Contato não registrado!", "OK");
+                    }
+
+                }
+                else
+                {
+                    var imageModel = new ContatosModel
+                        {
+                            Nome = contatoModel.Nome,
+                            Telefone = contatoModel.Telefone,
+                            Telefone2 = contatoModel.Telefone2,
+                            Aniversario = contatoModel.Aniversario
+                        };
+
+                    int responseUsuario = await iConsultaLocal.AddUContatos(imageModel);
+
+                    if (responseUsuario > 0)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Sucesso", "Contato registrado com sucesso!", "OK");
+                        Navigation.NavigateTo("/contatos");
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert("Erro", "Contato não registrado!", "OK");
+                    }
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(_imageBase64Data))
+                {
+                    var imageBytes = Convert.FromBase64String(_imageBase64Data);
+
+                    var imageModel = contatoModel;
+                    imageModel.ContatoID = ContatoID;
+                    imageModel.UserAvatar = imageBytes;
+                    imageModel.Nome = contatoModel.Nome;
+                    imageModel.Telefone = contatoModel.Telefone;
+                    imageModel.Telefone2 = contatoModel.Telefone2;
+                    imageModel.NameImage = _userAvatar;
+                    imageModel.Aniversario = contatoModel.Aniversario;
+
+                    UsuarioImage = imageModel;
+                }
+                else
+                {
+                    var imageModel = contatoModel;
+                    imageModel.ContatoID = ContatoID;
+                    imageModel.NameImage = contatoModel.NameImage;
+                    imageModel.Nome = contatoModel.Nome;
+                    imageModel.Telefone = contatoModel.Telefone;
+                    imageModel.Telefone2 = contatoModel.Telefone2;
+                    imageModel.Aniversario = contatoModel.Aniversario;
+                    imageModel.NameImage = _userAvatar;
+
+                    Usuario = imageModel;
+                }
+
+                int linhasAfetadas;
+
+                if (UsuarioImage != null)
+                {
+                    linhasAfetadas = await iConsultaLocal.UpdateContatos(UsuarioImage);
+                }
+                else
+                {
+                    linhasAfetadas = await iConsultaLocal.UpdateContatos(Usuario);
+                }
+
+                if (linhasAfetadas > 0)
+                {
+                    // A atualização foi bem-sucedida
+                    await App.Current.MainPage.DisplayAlert("Atenção", "atualização foi bem-sucedida!", "OK");
+                }
+                else
+                {
+                    // A atualização falhou
+                    await App.Current.MainPage.DisplayAlert("Atenção", "atualização falhou!", "OK");
+                }
+            }
+
+            _spinnerClass = "";
+            this.StateHasChanged();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }       
+
+    private async void ExibirAcao()
+    {
+        try
+        {
+            string response = await App.Current.MainPage.DisplayActionSheet("Selecione a opção", "OK", null, "Tirar a foto", "Add Foto");
+
+            if (response == "Tirar a foto")
+            {
+                if (_userAvatar != "images/user.png")
+                {
+                    _userAvatar = "images/user.png";
+                    _imageBase64Data = null;
+                }
+            }
+            else if (response == "Add Foto")
+            {
+                var photo = await MediaPicker.Default.PickPhotoAsync();
+                if (photo != null)
+                {
+                    using (var stream = await photo.OpenReadAsync())
+                    {
+                        var memoryStream = new MemoryStream();
+                        await stream.CopyToAsync(memoryStream);
+                        var imageBytes = memoryStream.ToArray();
+
+                        // Converter os bytes em uma string base64 para exibir a imagem na tela
+                        _userAvatar = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(imageBytes));
+
+                        // Armazenar a string base64 para ser usada posteriormente na validação
+                        _imageBase64Data = Convert.ToBase64String(imageBytes);
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+        
+    private void Retornar()
+    {
+        try
+        {
+            Navigation.NavigateTo("/contatos");
+        }
+        catch (Exception )
+        {
+            throw;
+        }
+    }
+
+    public string GetImageBase64(ContatosModel usuario)
+    {
+        try
+        {
+            var imageData = usuario.UserAvatar;
+            var imageBase64 = Convert.ToBase64String(imageData);
+            return string.Format("data:image/png;base64,{0}", imageBase64);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+}

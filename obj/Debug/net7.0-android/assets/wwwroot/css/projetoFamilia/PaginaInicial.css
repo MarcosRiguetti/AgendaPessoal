@@ -1,0 +1,18 @@
+﻿body {
+    background-color: #333; /* Cor de fundo meio escura */
+}
+
+.titulo {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
+
+.padrao {
+    color: white;
+}
+
+#fomrLabel {
+    font-weight: bold;
+    color: white;
+}

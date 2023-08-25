@@ -1,0 +1,109 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\obj\\Debug\\net7.0-android\\scopedcss\\bundle\\AgendaPessoal.styles.css",
+      "PackagePath": "staticwebassets\\AgendaPessoal.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\Images\\Logo.jpg",
+      "PackagePath": "staticwebassets\\Images\\Logo.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\Images\\telefone.jpg",
+      "PackagePath": "staticwebassets\\Images\\telefone.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\Images\\user.png",
+      "PackagePath": "staticwebassets\\Images\\user.png"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "PackagePath": "staticwebassets\\css\\open-iconic"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "PackagePath": "staticwebassets\\css\\open-iconic"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\open-iconic\\README.md",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\README.md"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\projetoFamilia\\PaginaInicial.css",
+      "PackagePath": "staticwebassets\\css\\projetoFamilia\\PaginaInicial.css"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\projetoFamilia\\cadastroAudiencia.css",
+      "PackagePath": "staticwebassets\\css\\projetoFamilia\\cadastroAudiencia.css"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\projetoFamilia\\configuracao.css",
+      "PackagePath": "staticwebassets\\css\\projetoFamilia\\configuracao.css"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\css\\projetoFamilia\\contatoInicio.css",
+      "PackagePath": "staticwebassets\\css\\projetoFamilia\\contatoInicio.css"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Newsgps3\\Documents\\Pessoal\\MeusProjetos\\GitHub\\AgendaPessoal\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0-android\\staticwebassets\\msbuild.AgendaPessoal.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0-android\\staticwebassets\\msbuild.build.AgendaPessoal.props",
+      "PackagePath": "build\\AgendaPessoal.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0-android\\staticwebassets\\msbuild.buildMultiTargeting.AgendaPessoal.props",
+      "PackagePath": "buildMultiTargeting\\AgendaPessoal.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0-android\\staticwebassets\\msbuild.buildTransitive.AgendaPessoal.props",
+      "PackagePath": "buildTransitive\\AgendaPessoal.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,140 @@
+﻿@page "/contatos"
+
+@using AgendaPessoal.Repository
+@using AgendaPessoal.Model
+
+@inject IConsulta_Local iConsultaLocal
+@inject NavigationManager Navigation
+
+<link rel="stylesheet" href="css/projetoFamilia/contatoInicio.css"/>
+
+<h3 class="titulo-configuracoes" >Contatos</h3>
+
+<br />
+<br />
+
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="padrao">Foto</th>
+                <th scope="col" class="padrao">Nome</th>
+                <th scope="col" class="padrao">Celular</th>
+                <th scope="col" class="padrao">Telefone</th>
+                <th scope="col" class="padrao">Data de Aniversario</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (contatosModels != null && contatosModels.Count > 0)
+            {
+                var groupedContatos = contatosModels
+                    .GroupBy(c => c.Nome.Substring(0, 1).ToUpper())
+                    .OrderBy(g => g.Key);
+
+                foreach (var group in groupedContatos)
+                {
+                    <tr>
+                        <td colspan="6" class="padrao"><strong>@group.Key</strong></td>
+                    </tr>
+
+                    foreach (var item in group)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.UserAvatar != null)
+                                {
+                                    <img src="@GetImageBase64(item)" alt="Avatar do Usuário" class="rounded-circle img-thumbnail" style="width: 50px; height: 50px;" />
+                                }
+                                else
+                                {
+                                    <img src="images/user.png" alt="Avatar Padrão de Usuário" class="rounded-circle img-thumbnail" style="width: 50px; height: 50px;" />
+                                }
+                            </td>
+                            <td class="padrao">@item.Nome</td>
+                            <td class="padrao">@item.Telefone</td>
+                            <td class="padrao">@item.Telefone2</td>
+                            <td class="padrao">@item.Aniversario.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <button type="submit" @onclick="@(()=> EditarContato(item.ContatoID))" class="btn btn-primary">Editar</button>
+                            </td>
+                            <td>
+                                <button type="submit" @onclick="@(()=> DeleteContato(item))" class="btn btn-danger">Deletar</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<br />
+
+<button type="submit" @onclick="IrPaginaCadastro" class="mt-2 btn btn-primary">Cadastrar</button>
+
+<br />
+<br />
+
+@code {
+    List<ContatosModel> contatosModels;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            contatosModels = await iConsultaLocal.GetAllContatos();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    private void IrPaginaCadastro()
+    {
+        Navigation.NavigateTo("/cadastroCliente");
+    }
+
+    private void EditarContato(int ContatoModelID)
+    {
+        try
+        {
+            Navigation.NavigateTo($"editarContato/{ContatoModelID}");
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    private async void DeleteContato(ContatosModel contatos)
+    {
+        try
+        {
+            var response = await iConsultaLocal.DeleteContatos(contatos);
+            if (response > 0)
+            {
+                await OnInitializedAsync();
+                this.StateHasChanged();
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    public string GetImageBase64(ContatosModel usuario)
+    {
+        try
+        {
+            var imageData = usuario.UserAvatar;
+            var imageBase64 = Convert.ToBase64String(imageData);
+            return string.Format("data:image/png;base64,{0}", imageBase64);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+}

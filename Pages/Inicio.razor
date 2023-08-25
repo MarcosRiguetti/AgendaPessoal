@@ -1,0 +1,91 @@
+﻿@page "/"
+
+@using AgendaPessoal.Repository
+@using AgendaPessoal.Model
+
+@inject IConsulta_Local iConsultaLocal
+@inject NavigationManager Navigation
+
+<link rel="stylesheet" href="css/projetoFamilia/PaginaInicial.css" />
+
+<h3 class="titulo">Seja bem Vindo!</h3>
+
+<br />
+<br />
+
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="padrao">Foto</th>
+                <th scope="col" class="padrao">Nome</th>
+                <th scope="col" class="padrao">Data de Aniversario</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (contatosModels != null && contatosModels.Count > 0)
+            {
+                var groupedContatos = contatosModels
+                .GroupBy(c => c.Nome.Substring(0, 1).ToUpper())
+                .OrderBy(g => g.Key);
+
+                foreach (var group in groupedContatos)
+                {
+                    <tr>
+                        <td colspan="6" class="padrao"><strong>@group.Key</strong></td>
+                    </tr>
+
+                    foreach (var item in group)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.UserAvatar != null)
+                                {
+                                    <img src="@GetImageBase64(item)" alt="Avatar do Usuário" class="rounded-circle img-thumbnail" style="width: 50px; height: 50px;" />
+                                }
+                                else
+                                {
+                                    <img src="images/user.png" alt="Avatar Padrão de Usuário" class="rounded-circle img-thumbnail" style="width: 50px; height: 50px;" />
+                                }
+                            </td>
+                            <td class="padrao">@item.Nome</td>
+                            <td class="padrao">@item.Aniversario.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    List<ContatosModel> contatosModels;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            contatosModels = await iConsultaLocal.GetAllContatos();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    public string GetImageBase64(ContatosModel usuario)
+    {
+        try
+        {
+            var imageData = usuario.UserAvatar;
+            var imageBase64 = Convert.ToBase64String(imageData);
+            return string.Format("data:image/png;base64,{0}", imageBase64);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+}
+
+
